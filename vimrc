@@ -18,6 +18,7 @@ function! TrimWhiteSpace()
   %s/\s\+$//e
 endfunction
 
+" gui settings {{{
 if has ("gui_running")
     set guifont=Ubuntu\ Mono:h14
     set undofile
@@ -36,8 +37,9 @@ if has ("gui_running")
     map <D-/> <plug>NERDCommenterToggle<CR>
     imap <D-/> <Esc><plug>NERDCommenterToggle<CR>i
 endif
+"}}}
 
-" Whitespace stuff
+" Whitespace stuff {{{
 set wrap
 set linebreak
 set shiftround
@@ -46,6 +48,7 @@ set softtabstop=4      " indent as if tabs are 4 columns wide
 set shiftwidth=4       " indent 4 columns
 set expandtab          " insert spaces instead of tabs
 set smartindent        " guess new indentation levels
+"}}}
 
 " Vimscript file settings --------------- {{{
 augroup filetype_vim
@@ -54,22 +57,23 @@ augroup filetype_vim
 augroup END
 " }}}
 
-" Add autcmd to trim whitespace on file save
+" Add autcmd to trim whitespace on file save {{{
 augroup trim_whitespace
     autocmd FileWritePre    * :call TrimWhiteSpace()
     autocmd FileAppendPre   * :call TrimWhiteSpace()
     autocmd FilterWritePre  * :call TrimWhiteSpace()
     autocmd BufWritePre     * :call TrimWhiteSpace()
 augroup END
+"}}}
 
 " Add spell checking and automatic wrapping to commit messages and text docs
 augroup git_commands
     autocmd!
     autocmd FileType gitcommit setlocal spell textwidth=72
-    autocmd FileType text setlocal spell textwidth=72
+    autocmd FileType text setlocal spell textwidth=80
 augroup END
 
-" filetype specific tabs
+" filetype specific tabs {{{
 augroup filetype_tabs
     autocmd!
     autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
@@ -80,6 +84,7 @@ augroup filetype_tabs
     au BufNewFile,BufReadPost *.coffee setlocal softtabstop=2 shiftwidth=2
     au BufNewFile,BufReadPost *.jade setlocal softtabstop=2 shiftwidth=2
 augroup END
+"}}}
 
 " Remember last location in file
 if has("autocmd")
@@ -99,7 +104,7 @@ augroup end
 
 let javascript_enable_domhtmlcss=1  "enable HTML/CSS syntax highlighting in js files
 
-" filetype specific abbreviations
+" filetype specific abbreviations {{{
 aug filetype_abbrevs
     au!
     au FileType javascript :iabbrev <buffer> fn function() {<cr><cr>}<up>
@@ -109,6 +114,7 @@ aug filetype_abbrevs
     au FileType python :iabbrev <buffer> iff if:<left>
     au FileType python :iabbrev <buffer> ret return
 aug END
+"}}}
 
 aug filetype_folding
     au!
@@ -176,7 +182,6 @@ set go-=T
 let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$']
 nnoremap <Leader>n :NERDTreeToggle<CR>
 
-
 " Directories for swp files
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
@@ -186,6 +191,9 @@ let g:JSLintHighlightErrorLine = 0
 
 " MacVIM shift+arrow-keys behavior (required in .vimrc)
 let macvim_hig_shift_movement = 1
+
+" *** Convenience mappings *** {{{
+" ----------------------------
 
 let mapleader=";"  " Allows you to use ';' instead of ':'
 let maplocalleader=","  " Allows you to use ',' as the prefix in certain files
@@ -197,9 +205,6 @@ nnoremap <silent> <Leader>w :w<CR>
 nnoremap <silent> <Leader>q :q<CR>
 nnoremap <silent> <Leader>x :wq<CR>
 
-
-" *** Convenience mappings ***
-" ----------------------------
 
 " Movement mappings
 " ------
@@ -239,8 +244,9 @@ vnoremap <Leader>' c''<esc>hp
 inoremap jk <esc>
 " make <esc> a no op
 inoremap <esc> <nop>
+" }}}
 
-" useful insert abbreviations
+" useful insert abbreviations {{{
 iabbrev hellow hello
 iabbrev ssig --<cr>Jacob Speidel<cr>jacob.speidel@gmail.com
 iabbrev @@ jacob@jacobspeidel.com
@@ -250,3 +256,4 @@ iabbrev scopy Copyright 2014 Seattle Sockeye Frisbee Club, all rights reserved
 " Insert timestamp
 nnoremap <F3> a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
 inoremap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
+" }}}
