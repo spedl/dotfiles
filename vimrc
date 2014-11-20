@@ -100,6 +100,7 @@ augroup set_filetype
 
     " add json syntax highlighting
     au BufNewFile,BufRead *.json set ft=javascript
+    au BufNewFile,BufRead *.less set ft=css
 augroup end
 
 let javascript_enable_domhtmlcss=1  "enable HTML/CSS syntax highlighting in js files
